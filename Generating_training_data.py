@@ -5,7 +5,6 @@ pic_no=0
 print('enter the name of the person for enrollment')
 name=input()
 os.makedirs(name)
-
 fa=cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 cap=cv2.VideoCapture(0)
 ret=True
@@ -17,12 +16,13 @@ while ret:
     for (x,y,w,h) in faces:
         cropped=frame[y:y+h,x:x+w]
         cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2,cv2.LINE_AA)
-    cv2.imshow('frame',frame)
-    if(cv2.waitKey(1)& 0XFF==ord('q')):
-        cv2.imwrite(name+'/'+str(pic_no)+'.jpg',cropped)
         pic_no=pic_no+1
-        if(pic_no>50):
-            break
+        cv2.imwrite(name+'/'+str(pic_no)+'.jpg',cropped)
+    cv2.imshow('frame',frame)
+    cv2.waitKey(100)
+
+    if(pic_no>50):
+    	break
 
 
 cap.release()

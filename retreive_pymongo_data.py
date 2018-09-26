@@ -4,7 +4,7 @@ import pandas as pd
 class database:
     def __init__(self):
         self.client=MongoClient()
-        self.db=self.client.project3
+        self.db=self.client.new
         self.name=[]
         self.attendance=[]
 

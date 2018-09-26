@@ -5,7 +5,7 @@ pic_no=0
 print('enter the name of the person for enrollment')
 name=input()
 os.makedirs(name)
-fa=cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+fa=cv2.CascadeClassifier('faces.xml')
 cap=cv2.VideoCapture(1)
 ret=True
 while ret:

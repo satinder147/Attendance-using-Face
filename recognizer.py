@@ -7,9 +7,9 @@ from retreive_pymongo_data import database
 
 
 label=None
-a={"satinder":0,"sagat":0,"mandeep":0}
-
-
+a={0:0,1:0,2:0,3:0,4:0}
+people={0:"satinder",1:"sagat",2:"mandeep",3:"sobhu",4:"ravi"}
+abhi=None
 data=database()
 e=emb()
 fd=face()
@@ -17,10 +17,22 @@ fd=face()
 print('attendance till now is ')
 data.view()
 
-model=load_model('face_reco.MODEL')
+model=load_model('face_reco1.MODEL')
+
+
+def test():
+    test_run=cv2.imread('1.jpg',1)
+    test_run=cv2.resize(test_run,(160,160))
+    test_run=test_run.astype('float')/255.0
+    test_run=np.expand_dims(test_run,axis=0)
+    test_run=e.calculate(test_run)
+    test_run=np.expand_dims(test_run,axis=0)
+    test_run=model.predict(test_run)[0]
+
+
 cap=cv2.VideoCapture(1)
 ret=True
-
+test()
 while ret:
     ret,frame=cap.read()
     frame=cv2.flip(frame,1)
@@ -36,30 +48,17 @@ while ret:
         prediction=model.predict(feed)[0]
 
         result=int(np.argmax(prediction))
-        if(result==0):
-            label="satinder"
-            if(a[label]==0):
-                data.update(label)
-            a[label]=1
-
-
-        elif(result==1):
-            label="sagat"
-            if(a[label]==0):
-                data.update(label)
-            a[label]=1
-
-
-        elif(result==2):
-            label="mandeep"
-            if(a[label]==0):
-                data.update(label)
-            a[label]=1
-
+        for i in people:
+            if(result==i):
+                label=people[i]
+                if(a[i]==0):
+                    data.update(label)
+                a[i]=1
+                abhi=i
 
         #data.update(label)
         cv2.putText(frame,label,(x,y),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2)
-        if(a[label]==1):
+        if(a[abhi]==1):
             cv2.putText(frame,"your attendance is complete",(x,y-30),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,255),2)
         cv2.rectangle(frame,(x,y),(x+w,y+h),(252,160,39),3)
         cv2.imshow('onlyFace',f)

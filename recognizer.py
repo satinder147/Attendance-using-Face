@@ -17,7 +17,7 @@ fd=face()
 print('attendance till now is ')
 #data.view()
 
-model=load_model('inception.MODEL')
+model=load_model('face_reco2.MODEL.MODEL')
 
 
 def test():
